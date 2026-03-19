@@ -183,6 +183,10 @@ function BodySchema({highlights={},mode="exercise",gender="male",accent="#FF6B2C
   const skinDark=dark?"#1e1a2a":"#e8d4c0";
   const c=(r)=>mode==="exercise"?intensityColor(highlights[r],accent):heatColor(highlights[r]||0);
   const W=130,H=280;
+  const isFem=gender==="female";
+  const tW=isFem?22:18; // torso waist width offset
+  const tH=isFem?130:120; // torso bottom Y
+  const tWY=isFem?140:130; // torso waist Y
   return<div>
     <div style={{display:"flex",gap:6,justifyContent:"center",marginBottom:8}}>
       {["front","back"].map(v=><button key={v} onClick={()=>setView(v)} style={{padding:"4px 12px",border:`1px solid ${view===v?accent:"#333"}`,borderRadius:12,background:view===v?`${accent}22`:"transparent",color:view===v?accent:"#666",cursor:"pointer",fontFamily:"Bebas Neue,sans-serif",fontSize:11,letterSpacing:.5}}>{v==="front"?"FACE":"DOS"}</button>)}
@@ -194,7 +198,7 @@ function BodySchema({highlights={},mode="exercise",gender="male",accent="#FF6B2C
       {/* Neck */}
       <rect x={W/2-8} y={39} width={16} height={12} rx={4} fill={skin}/>
       {/* Torso */}
-      <path d={`M${W/2-28},51 Q${W/2-32},55 ${W/2-30},${gender==="female"?130:120} Q${W/2-${gender==="female"?22:18}},${gender==="female"?140:130} ${W/2-${gender==="female"?20:18}},155 L${W/2+${gender==="female"?20:18}},155 Q${W/2+${gender==="female"?22:18}},${gender==="female"?140:130} ${W/2+30},${gender==="female"?130:120} Q${W/2+32},55 ${W/2+28},51 Z`} fill={skinDark} stroke={outline} strokeWidth={.5}/>
+      <path d={`M${W/2-28},51 Q${W/2-32},55 ${W/2-30},${tH} Q${W/2-tW},${tWY} ${W/2-tW+2},155 L${W/2+tW-2},155 Q${W/2+tW},${tWY} ${W/2+30},${tH} Q${W/2+32},55 ${W/2+28},51 Z`} fill={skinDark} stroke={outline} strokeWidth={.5}/>
       {/* Hips */}
       <ellipse cx={W/2} cy={160} rx={gender==="female"?28:22} ry={10} fill={skinDark}/>
       {/* Upper legs */}
